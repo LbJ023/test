@@ -1,19 +1,19 @@
 ========================================================================
-       CONSOLE APPLICATION : snake
+       CONSOLE APPLICATION : snack
 ========================================================================
 
 
-AppWizard has created this snake application for you.  
+AppWizard has created this snack application for you.  
 
 This file contains a summary of what you will find in each of the files that
-make up your snake application.
+make up your snack application.
 
-snake.dsp
+snack.dsp
     This file (the project file) contains information at the project level and
     is used to build a single project or subproject. Other users can share the
     project (.dsp) file, but they should export the makefiles locally.
 
-snake.cpp
+snack.cpp
     This is the main application source file.
 
 
@@ -22,7 +22,7 @@ Other standard files:
 
 StdAfx.h, StdAfx.cpp
     These files are used to build a precompiled header (PCH) file
-    named snake.pch and a precompiled types file named StdAfx.obj.
+    named snack.pch and a precompiled types file named StdAfx.obj.
 
 
 /////////////////////////////////////////////////////////////////////////////
