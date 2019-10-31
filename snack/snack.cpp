@@ -1,6 +1,5 @@
 // snack.cpp : Defines the entry point for the console application.
 //
-
 #include "stdafx.h"
 #include <windows.h>
 #include <stdlib.h>
@@ -55,9 +54,9 @@ void Init_Map()
 	}
 }
 
-
 Snake g_snake;
 Position g_food;
+
 //食物的随机位置
 void Init_Food()
 {
@@ -104,6 +103,64 @@ void Init()
 	Init_Food();
 }
 
+//用键盘的w/a/s/d输入来控制贪吃蛇的上下左右移动
+void SnakeMove(int key)
+{
+	int delta_x=0;
+	int delta_y=0;
+
+	if(key=='w'|| key=='W')
+	{
+		delta_x=0;
+		delta_y=-1;
+	}
+	else if(key=='s'|| key=='S')
+	{
+		delta_x=0;
+		delta_y=1;
+	}
+	else if(key=='a'|| key=='A')
+	{
+		delta_x=-1;
+		delta_y=0;
+	}
+	else if(key=='d'|| key=='D')
+	{
+		delta_x=1;
+		delta_y=0;
+	}
+	else
+	{
+		return;	//无效按键
+	}
+
+	DrawChar(g_snake.pos[g_snake.size-1].x,g_snake.pos[g_snake.size-1].y,' ');//删除尾节点
+	
+	//1、后一个节点=前一个节点的坐标
+	//2、g_snake.size-1:最后一个节点的坐标
+	//3、i>0:不包括头节点
+	for(int i=g_snake.size-1;i>0;i--)
+	{
+		g_snake.pos[i].x=g_snake.pos[i-1].x;
+		g_snake.pos[i].y=g_snake.pos[i-1].y;
+	}
+
+		g_snake.pos[0].x +=delta_x;
+		g_snake.pos[0].y +=delta_y;
+}
+
+void Eat_food()
+{
+	if(g_snake.pos[0].x ==g_food.x &&g_snake.pos[0].y==g_food.y)
+	{
+		g_snake.size++;
+		//新的尾节点跟食物的坐标一致
+		g_snake.pos[g_snake.size-1].x=g_food.x;
+		g_snake.pos[g_snake.size-1].y=g_food.y;
+		Init_Food();
+	}	
+}
+
 void UpdateScreen()
 {
 	DrawSnake();
@@ -124,6 +181,15 @@ void GameLoop()
 		{
 			return;
 		}
+		//键盘移动贪吃蛇
+		SnakeMove(key);
+
+		//处理撞墙等事件
+		Eat_food();
+
+		//更新画面
+		UpdateScreen();
+
 		// 延时
 		Sleep(100);
 	}
@@ -143,7 +209,7 @@ int main(int argc, char* argv[])
 	GameLoop();
 
 	// 打印得分
-	//Score();
+	Score();
 	return 0;
 }
 
